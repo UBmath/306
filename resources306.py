@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sympy as sp
 from scipy.integrate import odeint
+from scipy.optimize import fsolve
 
 '''Utilities for MTH 306 in Spring 2019
 	John Ringland'''
