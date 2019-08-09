@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import sympy as sp
 from scipy.integrate import odeint
 from scipy.optimize import fsolve
+import scipy
 
 '''Utilities for MTH 306 in Spring 2019
 	John Ringland'''
@@ -20,7 +21,7 @@ def expressionplot( expression, variable, varmin=0,varmax=1, npts=200, lw=3, alp
 
 	# When using sp Laplace transform we need to provide a translation for 'Heaviside' that does not exist in numpy
     def H(z): return 1.*(z>=0)
-    npe = sp.lambdify(variable,expression,['numpy',{'Heaviside':H}])
+    npe = sp.lambdify(variable,expression,['numpy',{'Heaviside':H,'erf':scipy.special.erf}])
     npx = np.linspace(varmin,varmax,npts)
     plt.plot(npx,npe(npx), lw=lw, alpha=alpha, *args, **kwargs)
 
