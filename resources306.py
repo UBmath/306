@@ -103,7 +103,7 @@ def fieldplot2(f,g,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1
     plt.xlim(xmin,xmax) # plot ranges strangely are [0,1] x [0,1] otherwise
     plt.ylim(ymin,ymax)
 
-def fieldplot3(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,arrowheads=True,alpha=1):
+def fieldplot(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,arrowheads=True,alpha=1):
     # JR 3/7/2021
     xr = xmax-xmin
     yr = ymax-ymin
@@ -176,7 +176,7 @@ def fieldplot_old(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=
     plt.xlim(xmin,xmax) # plot ranges strangely are [0,1] x [0,1] otherwise
     plt.ylim(ymin,ymax)
     
-fieldplot = fieldplot3
+#fieldplot = fieldplot3
 
 def phaseportrait(F,ics=[], *args, **kwargs):  # F is a vector-valued function of a vector argument
 	#print(kwargs)
