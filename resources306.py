@@ -124,7 +124,7 @@ def fieldplot3(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,
     arrowsX = np.vstack((X,Xp))
     arrowsY = np.vstack((Y,Yp))
     if arrowheads:
-        head_width  = 0.5*xr    # A modification made here.  I don't know if this works well in general,
+        head_width  = 3 #0.5*xr    # A modification made here.  I don't know if this works well in general,
     else:                       # but it seemed the right thing here.
         head_width  = 0
     head_length = head_width/0.6
