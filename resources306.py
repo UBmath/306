@@ -102,8 +102,40 @@ def fieldplot2(f,g,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1
         plt.arrow( xc,yc, h*u,h*v, fc=color, ec=color, alpha=alpha, width=head_width/5, head_width=head_width, head_length=head_length )
     plt.xlim(xmin,xmax) # plot ranges strangely are [0,1] x [0,1] otherwise
     plt.ylim(ymin,ymax)
+
+def fieldplot3(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,arrowheads=True,alpha=1):
+    # JR 3/7/2021
+    xr = xmax-xmin
+    yr = ymax-ymin
+    ny = nx                         # Added line.
+    # ny = int(nx*yr/xr)            # Commented out old line.
+    if aspect!=None:
+        plt.subplot(111,aspect=aspect)
+    X,Y = np.meshgrid( np.linspace(xmin,xmax,nx), np.linspace(ymin,ymax,ny) )
+    X = X.flatten()
+    Y = Y.flatten()
+    U,V = F((X,Y))
+    U = U + 0*X
+    V = V + 0*X
+    # scale length of arrows - note arrowhead is added beyond the end of the line segment
+    h = boostarrows*0.9*min(xr/float(nx-1)/abs(U).max(),yr/float(ny-1)/abs(V).max())
+    Xp = X + h*U
+    Yp = Y + h*V
+    arrowsX = np.vstack((X,Xp))
+    arrowsY = np.vstack((Y,Yp))
+    if arrowheads:
+        head_width  = 0.5*xr    # A modification made here.  I don't know if this works well in general,
+    else:                       # but it seemed the right thing here.
+        head_width  = 0
+    head_length = head_width/0.6
+
+    for xc,yc,u,v in zip(X,Y,U,V):
+        plt.annotate("",xy=(xc+h*u,yc+h*v), xytext=(xc, yc), arrowprops=dict(width=head_width/5, headwidth=head_width, headlength=head_length,color='b'))
+        #plt.arrow( xc,yc, h*u,h*v, fc=color, ec=color, alpha=alpha, width=head_width/5, head_width=head_width, head_length=head_length )
+    plt.xlim(xmin,xmax) # plot ranges strangely are [0,1] x [0,1] otherwise
+    plt.ylim(ymin,ymax)
     
-def fieldplot(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,arrowheads=True,alpha=1):
+def fieldplot_old(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,arrowheads=True,alpha=1):
     #def f(x,y): return F((x,y))[0] # don't know why wer were doing it like this  3/7/2021
     #def g(x,y): return F((x,y))[1]
     # Doing it this way is unfortunately twice the work (2 calls to F for every evaluation)
@@ -144,6 +176,7 @@ def fieldplot(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,a
     plt.xlim(xmin,xmax) # plot ranges strangely are [0,1] x [0,1] otherwise
     plt.ylim(ymin,ymax)
     
+fieldplot = fieldplot3
 
 def phaseportrait(F,ics=[], *args, **kwargs):  # F is a vector-valued function of a vector argument
 	#print(kwargs)
