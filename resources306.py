@@ -104,8 +104,8 @@ def fieldplot2(f,g,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1
     plt.ylim(ymin,ymax)
     
 def fieldplot(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,arrowheads=True,alpha=1):
-    def f(x,y): return F((x,y))[0]
-    def g(x,y): return F((x,y))[1]
+    #def f(x,y): return F((x,y))[0] # don't know why wer were doing it like this  3/7/2021
+    #def g(x,y): return F((x,y))[1]
     # Doing it this way is unfortunately twice the work (2 calls to F for every evaluation)
     '''f and g are numpy-friendly functions of 2 variables'''
     #plt.clf()
@@ -122,6 +122,8 @@ def fieldplot(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,a
     Y = Y.flatten()
     U = f(X,Y)
     V = g(X,Y)
+    U += 0*X  # in case first component of F is scalar  JR 3/7/2021
+    V += 0*X  # in case second component of F is scalar  JR 3/7/2021
     #print(U)
     #print(V)
     # scale length of arrows - note arrowhead is added beyond the end of the line segment
