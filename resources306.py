@@ -120,8 +120,9 @@ def fieldplot(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,a
     X,Y = np.meshgrid( np.linspace(xmin,xmax,nx), np.linspace(ymin,ymax,ny) )
     X = X.flatten()
     Y = Y.flatten()
-    U = f(X,Y)
-    V = g(X,Y)
+    #U = f(X,Y) # JR 3/7/2021
+    #V = g(X,Y) # JR 3/7/2021
+    U,V = F((X,Y)) # JR 3/7/2021
     U += 0*X  # in case first component of F is scalar  JR 3/7/2021
     V += 0*X  # in case second component of F is scalar  JR 3/7/2021
     #print(U)
