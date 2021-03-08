@@ -130,7 +130,7 @@ def fieldplot(F,xmin,xmax,ymin,ymax,color='b',aspect=None,nx=20,boostarrows=1.,a
     head_length = head_width/0.6
 
     for xc,yc,u,v in zip(X,Y,U,V):
-        plt.annotate("",xy=(xc+h*u,yc+h*v), xytext=(xc, yc), arrowprops=dict(width=head_width/5, headwidth=head_width, headlength=head_length,color='b'))
+        plt.annotate("",xy=(xc+h*u,yc+h*v), xytext=(xc, yc), arrowprops=dict(width=head_width/5, headwidth=head_width, headlength=head_length,color=color))
         #plt.arrow( xc,yc, h*u,h*v, fc=color, ec=color, alpha=alpha, width=head_width/5, head_width=head_width, head_length=head_length )
     plt.xlim(xmin,xmax) # plot ranges strangely are [0,1] x [0,1] otherwise
     plt.ylim(ymin,ymax)
