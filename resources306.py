@@ -17,13 +17,16 @@ sp.init_printing()
 
 def expressionplot( expression, variable, varmin=0,varmax=1, npts=200, lw=3, alpha=0.5, *args, **kwargs ):
     '''Plot a sympy expression on specified interval.
-       Sympy itself can do this, but the resulting plot cannot be combined with matplotlib plots (I believe).'''
-
+       Sympy itself can do this, but the resulting plot cannot be combined with matplotlib plots (I believe).'''\
 	# When using sp Laplace transform we need to provide a translation for 'Heaviside' that does not exist in numpy
     def H(z): return 1.*(z>=0)
-    npe = sp.lambdify(variable,expression,['numpy',{'Heaviside':H,'erf':scipy.special.erf}])
     npx = np.linspace(varmin,varmax,npts)
-    plt.plot(npx,npe(npx), lw=lw, alpha=alpha, *args, **kwargs)
+    # lambdify doesn't work as desired if the expression happens to be constant: fixed RH,JR 2/9/2022
+    if sp.sympify(expression).is_constant():
+        plt.plot(npx,float(expression)*np.ones_like(npx), lw=lw, alpha=alpha, *args, **kwargs)
+    else:
+        npe = sp.lambdify(variable,expression,['numpy',{'Heaviside':H}])
+        plt.plot(npx,npe(npx), lw=lw, alpha=alpha, *args, **kwargs)
 
 def get_aspect(ax=None):
     if ax is None:
